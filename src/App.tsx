@@ -1,16 +1,20 @@
 import { BrowserRouter } from "react-router-dom";
-import { Footer } from "./common/Footer";
-import { Navbar } from "./common/Navbar";
+import { Toaster } from "react-hot-toast";
 import { AppRoutes } from "./routes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "./context/authProvider";
 
 export default function App() {
   return (
     <div>
-      <Navbar />
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-      <Footer />
+      <QueryClientProvider client={new QueryClient()}>
+        <AuthProvider>
+          <BrowserRouter>
+            <Toaster position="top-right" />
+            <AppRoutes />
+          </BrowserRouter>
+        </AuthProvider>
+      </QueryClientProvider>
     </div>
   );
 }
