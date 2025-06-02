@@ -7,7 +7,6 @@ import { useAuthContext } from "@/context/authProvider";
 export function AppRoutes() {
   const authState = useAuthContext();
   const routes = authState?.user ? protectedRoutes : [...authRoutes];
-  console.log(routes);
   return useRoutes([
     ...publicRoutes,
     ...routes,
