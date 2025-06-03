@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRegisterEvent } from "./hooks/useRegisterEvent";
 import useGetTickets from "./hooks/useGetTickets";
-import { setTimeout } from "node:timers";
 
 type AttendEventInputs = {
   amount: string;
@@ -24,6 +23,7 @@ export default function AttendEventForm({
   const { mutate } = useRegisterEvent(eventId, data?.data[0].ticketType[0]?.id);
   console.log(data);
   const handleAttend = (data: AttendEventInputs) => {
+    console.log(data);
     toast.success("You're all set");
     mutate(undefined, {
       onSuccess: () => {

@@ -1,5 +1,3 @@
-import { useAuthContext } from "@/context/authProvider";
-
 export function Navbar() {
   return (
     <header className="flex items-center justify-between px-20 py-6 bg-white">
