@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import useCreateEvent from "../../hooks/useCreateEvent";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRegisterEvent } from "@/pages/Attend/hooks/useRegisterEvent";
 type CreateEventInputs = {
   name: string;
   description: string;

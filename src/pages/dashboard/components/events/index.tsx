@@ -39,7 +39,22 @@ export default function Events() {
           ></EventCard>
         ))}
 
-        {!!selectedEvent && <CreateTicketForm eventId={selectedEvent} />}
+        {!!selectedEvent && (
+          <div className="flex flex-col items-center justify-center w-full h-screen fixed left-0 right-0 top-0 bottom-0 z-10 bg-primary-300/50">
+            <div className="p-6 flex flex-col gap-4 bg-white w-1/3 rounded-md">
+              <CreateTicketForm
+                eventId={selectedEvent}
+                close={() => setSelectedEvent("")}
+              />
+              <button
+                className="bg-red-400 p-2 rounded-md text-white"
+                onClick={() => setSelectedEvent("")}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

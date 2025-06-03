@@ -8,7 +8,13 @@ type TicketInputs = {
   amount: string;
 };
 
-export default function TicketForm({ eventId }: { eventId: string }) {
+export default function TicketForm({
+  eventId,
+  close,
+}: {
+  eventId: string;
+  close: () => void;
+}) {
   const { mutate, isPending } = useCreateTickets(eventId);
   const { register, handleSubmit, formState } = useForm<TicketInputs>();
   const { errors } = formState;
@@ -19,6 +25,7 @@ export default function TicketForm({ eventId }: { eventId: string }) {
       {
         onSuccess: () => {
           toast.success("Ticket Created");
+          close();
         },
       },
     );
@@ -52,12 +59,12 @@ export default function TicketForm({ eventId }: { eventId: string }) {
           <input
             type="number"
             className="p-2 rounded border"
-            placeholder="Enter description"
+            placeholder="Enter amount of tickets for sale. "
             {...register("amount", {
               required: true,
               min: {
-                value: 7,
-                message: "description should be at least 7 character",
+                value: 1,
+                message: "minimum of 1 ticket",
               },
             })}
           />
@@ -88,7 +95,7 @@ export default function TicketForm({ eventId }: { eventId: string }) {
         type="submit"
         className="bg-primary-500 p-2 rounded-md text-white"
       >
-        Create Event
+        Create Ticket
       </button>
     </form>
   );

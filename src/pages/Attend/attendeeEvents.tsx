@@ -44,7 +44,10 @@ export default function Events() {
               <h1 className="font-semibold text-2xl">
                 {singleEvent?.data.name}
               </h1>
-              <AttendEventForm eventId={selectedEvent} />
+              <AttendEventForm
+                eventId={selectedEvent}
+                close={() => setSelectedEvent("")}
+              />
               <button
                 className="py-2 px-3 bg-red-400 text-white font-semibold"
                 onClick={() => {

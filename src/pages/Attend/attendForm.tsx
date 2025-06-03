@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useRegisterEvent } from "./hooks/useRegisterEvent";
+import useGetTickets from "./hooks/useGetTickets";
+import { setTimeout } from "node:timers";
 
 type AttendEventInputs = {
   amount: string;
@@ -8,14 +11,34 @@ type AttendEventInputs = {
 
 const REQUIRED_FIELD_MESSAGE = "This field is required";
 
-export default function AttendEventForm({ eventId }: { eventId: string }) {
+export default function AttendEventForm({
+  eventId,
+  close,
+}: {
+  eventId: string;
+  close: () => void;
+}) {
   const { register, formState, handleSubmit } = useForm<AttendEventInputs>();
   const { errors } = formState;
-
+  const { data } = useGetTickets(eventId);
+  const { mutate } = useRegisterEvent(eventId, data?.data[0].ticketType[0]?.id);
+  console.log(data);
   const handleAttend = (data: AttendEventInputs) => {
-    console.log(eventId);
-    console.log(data);
     toast.success("You're all set");
+    mutate(undefined, {
+      onSuccess: () => {
+        toast.success("You've successfully registerd");
+
+        close();
+      },
+
+      onError: () => {
+        // toast.error(
+        //   e.message ||
+        //     "failed to join event. Check your connection and try again ",
+        // );
+      },
+    });
   };
   return (
     <form
