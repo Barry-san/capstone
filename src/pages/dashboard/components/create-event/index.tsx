@@ -144,9 +144,9 @@ export default function CreateEventForm({
       <button
         disabled={isPending}
         type="submit"
-        className="bg-primary-500 p-2 rounded-md text-white"
+        className={`${isPending ? "bg-primary-500/60" : "bg-primary-500"} p-2 rounded-md text-white`}
       >
-        Create Event
+        {isPending ? "Loading..." : "Create Event"}
       </button>
     </form>
   );

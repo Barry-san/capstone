@@ -95,7 +95,7 @@ export default function TicketForm({
         type="submit"
         className="bg-primary-500 p-2 rounded-md text-white"
       >
-        Create Ticket
+        {isPending ? "Loading..." : "Create Ticket"}
       </button>
     </form>
   );

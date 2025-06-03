@@ -88,10 +88,25 @@ const EventCard = ({
         </section>
         <section className="flex flex-col justify-center py-4 gap-2">
           <p className="text-sm text-light flex gap-2 items-center justfy-between">
-            <img
-              src="src/assets/icons/location.png"
-              className="inline-block w-max"
-            />
+            <svg
+              width="22"
+              height="23"
+              viewBox="0 0 22 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.9996 12.8108C12.5792 12.8108 13.8596 11.5304 13.8596 9.95082C13.8596 8.37129 12.5792 7.09082 10.9996 7.09082C9.42011 7.09082 8.13965 8.37129 8.13965 9.95082C8.13965 11.5304 9.42011 12.8108 10.9996 12.8108Z"
+                stroke="#474747"
+                stroke-width="1.375"
+              />
+              <path
+                d="M3.31823 8.28251C5.12406 0.344179 16.8849 0.353346 18.6816 8.29168C19.7357 12.9483 16.8391 16.89 14.2999 19.3283C12.4574 21.1067 9.5424 21.1067 7.69073 19.3283C5.16073 16.89 2.26406 12.9392 3.31823 8.28251Z"
+                stroke="#474747"
+                stroke-width="1.375"
+              />
+            </svg>
+
             <span className="font-semibold">{event.location}</span>
           </p>
           <p className="text-sm text-light text-right flex gap-2 ">
