@@ -10,6 +10,7 @@ export function AppRoutes() {
   return useRoutes([
     ...publicRoutes,
     ...routes,
+    ...protectedRoutes,
     { path: "*", element: <NotFound /> },
   ]);
 }
