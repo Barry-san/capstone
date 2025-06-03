@@ -18,7 +18,15 @@ export default function Attendee() {
           {isJoining && (
             <div className="flex flex-col items-center justify-center w-full h-screen fixed left-0 right-0 top-0 bottom-0 z-10 bg-primary-300/50">
               <CreateEventForm closeForm={() => {}} />
-              <button onClick={() => setIsJoining(false)}>Close</button>
+              <button
+                onClick={() => {
+                  setIsJoining(false);
+                  console.log("hi theere");
+                }}
+                className="bg-red-500 rounded-md py-2 px-3"
+              >
+                Close
+              </button>
             </div>
           )}
         </section>

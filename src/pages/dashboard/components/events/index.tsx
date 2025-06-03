@@ -15,7 +15,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import CreateTicketForm from "../create-ticket";
 
 export default function Events() {
-  const [isAdding, setAdding] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState("");
   const { data, isLoading } = useGetEvents();
   if (isLoading) {
     return <p>Loading...</p>;
@@ -30,10 +30,16 @@ export default function Events() {
       <div className="flex flex-col gap-4">
         {data.data.map((event: EventType) => (
           <EventCard
+            selectedEvent={selectedEvent}
             event={event as EventType}
-            handleAddTickets={() => setAdding(true)}
+            handleAddTickets={() => {
+              setSelectedEvent(event.id);
+              console.log(selectedEvent);
+            }}
           ></EventCard>
         ))}
+
+        {!!selectedEvent && <CreateTicketForm eventId={selectedEvent} />}
       </div>
     );
   }
@@ -42,13 +48,16 @@ export default function Events() {
 const EventCard = ({
   event,
   handleAddTickets,
+  selectedEvent,
 }: {
   event: EventType;
   handleAddTickets: () => unknown;
+  selectedEvent: string;
 }) => {
   const { mutate } = useDeleteEvent(event.id);
   const client = useQueryClient();
 
+  console.log(selectedEvent);
   return (
     <div className="flex gap-3 w-full justify-between odd:bg-primary-50 p-2">
       <img src="/images/eventcard.png" />

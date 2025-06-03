@@ -14,7 +14,7 @@ type CreateEventInputs = {
 export default function CreateEventForm({
   closeForm,
 }: {
-  closeForm: Function;
+  closeForm: () => unknown;
 }) {
   const { register, formState, handleSubmit } = useForm<CreateEventInputs>();
 

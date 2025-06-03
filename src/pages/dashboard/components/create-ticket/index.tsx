@@ -4,8 +4,7 @@ import toast from "react-hot-toast";
 
 type TicketInputs = {
   name: string;
-  type: "REGULAR" | "VIP" | "VVIP";
-  price: number;
+  description: string;
   amount: string;
 };
 
@@ -14,31 +13,30 @@ export default function TicketForm({ eventId }: { eventId: string }) {
   const { register, handleSubmit, formState } = useForm<TicketInputs>();
   const { errors } = formState;
 
-  const createTicket = ({ name, amount, type }: TicketInputs) => {
+  const createTicket = ({ name, description }: TicketInputs) => {
     mutate(
-      { name, type, amount: 100 },
+      { name, description, amount: 100, eventId },
       {
         onSuccess: () => {
-          toast.success("");
+          toast.success("Ticket Created");
         },
       },
     );
-    console.log(data);
   };
 
   return (
     <form onSubmit={handleSubmit(createTicket)} className="flex flex-col gap-4">
       <div className="flex flex-col gap-3">
         <label className="flex flex-col">
-          Event name
+          Ticket name
           <input
             className="p-2 rounded border"
-            placeholder="Enter event name"
+            placeholder="Enter ticket name"
             {...register("name", {
               required: true,
               min: {
                 value: 1,
-                message: "event name should be at least one character",
+                message: "ticket name should be at least one character",
               },
             })}
           />
@@ -52,6 +50,7 @@ export default function TicketForm({ eventId }: { eventId: string }) {
         <label className="flex flex-col gap-1">
           amount
           <input
+            type="number"
             className="p-2 rounded border"
             placeholder="Enter description"
             {...register("amount", {
@@ -68,28 +67,19 @@ export default function TicketForm({ eventId }: { eventId: string }) {
         )}
       </div>
 
-      <select
-        className="p-2 rounded border"
-        {...register("type", { required: "this is a required field" })}
-      >
-        <option value="VIRTUAL">Virtual</option>
-        <option value="HYBRID">Hybrid</option>
-        <option value="PHYSICAL">Physical</option>
-      </select>
-
       <div className="flex flex-col gap-3">
         <label className="flex flex-col gap-1">
-          price
+          Description
           <input
             className="p-2 rounded border"
-            placeholder="Enter date for the event"
-            {...register("price", {
+            placeholder="Enter a description for the ticket"
+            {...register("description", {
               required: { value: true, message: "this field is required" },
             })}
           />
         </label>
-        {errors.price?.message && (
-          <p className="text-sm text-red-500">{errors.price?.message}</p>
+        {errors.description?.message && (
+          <p className="text-sm text-red-500">{errors.description.message}</p>
         )}
       </div>
 

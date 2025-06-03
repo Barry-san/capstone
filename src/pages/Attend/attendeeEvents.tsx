@@ -9,9 +9,13 @@ type EventType = {
 };
 import { useState } from "react";
 import { useGetEvents } from "../dashboard/hooks/useGetEvents";
+import useGetEvent from "./hooks/useGetEvent";
+import AttendEventForm from "./attendForm";
 
 export default function Events() {
   const [isJoining, setIsJoining] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const { data: singleEvent } = useGetEvent(selectedEvent);
   const { data, isLoading } = useGetEvents();
   if (isLoading) {
     return <p>Loading...</p>;
@@ -27,11 +31,32 @@ export default function Events() {
         {data.data.map((event: EventType) => (
           <EventCard
             event={event as EventType}
-            handleJoinEvent={() => setIsJoining(true)}
+            handleJoinEvent={(id: string) => {
+              setIsJoining(true);
+              setSelectedEvent(id);
+            }}
           ></EventCard>
         ))}
 
-        {isJoining && <p>Joining Event</p>}
+        {isJoining && (
+          <div className="flex flex-col items-center justify-center w-full h-screen fixed left-0 right-0 top-0 bottom-0 z-10 bg-primary-300/50">
+            <div className="p-6 w-1/3 bg-white flex flex-col gap-4">
+              <h1 className="font-semibold text-2xl">
+                {singleEvent?.data.name}
+              </h1>
+              <AttendEventForm eventId={selectedEvent} />
+              <button
+                className="py-2 px-3 bg-red-400 text-white font-semibold"
+                onClick={() => {
+                  setSelectedEvent("");
+                  setIsJoining(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -42,7 +67,7 @@ const EventCard = ({
   handleJoinEvent,
 }: {
   event: EventType;
-  handleJoinEvent: () => unknown;
+  handleJoinEvent: (id: string) => unknown;
 }) => {
   return (
     <div className="flex gap-3 w-full justify-between odd:bg-primary-50 p-2">
@@ -73,7 +98,9 @@ const EventCard = ({
         </section>
         <section className="flex items-center justify-center py-4 gap-2">
           <button
-            onClick={() => {}}
+            onClick={() => {
+              handleJoinEvent(event.id);
+            }}
             className="bg-primary-400 text-white py-2 px-3 rounded-md"
           >
             RSVP
